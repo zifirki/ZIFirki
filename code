@@ -1,0 +1,38 @@
+from __future__ import print_function
+import pandas as pd
+from ANDR import *
+import os
+import numpy as np
+from ipywidgets import interact, interactive, fixed, interact_manual
+import ipywidgets as widgets
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+df = pd.read_csv('dataset2.csv', 
+                       sep='\t', encoding='cp866', index_col = "№ ПП"
+                       )
+s = df['Муниципалитет'].value_counts()
+s.name = ""
+s.plot(kind='pie', fontsize = 10, colors = ['skyblue','violet','c','yellow','lime','teal','coral','lightgrey','pink'])
+
+def get_info(db, vid, mun):
+    vid_info = db
+    for word in vid.split():
+        vid_info=vid_info[vid_info['Вид деятельности'].str.contains(word, case=False)]
+    mun_info = vid_info[vid_info['Муниципалитет']==mun]
+    return mun_info
+interact (lambda vid, mun: get_info(df, vid, mun),
+          vid ='',
+          mun=list(df['Муниципалитет'].unique()))
+def f(x):
+    showKlient(x)
+
+
+newDF = list()
+newDF.append("ALL")
+df["Получатель ИП ООО"].values
+for i in range(max(numberKlient)):
+    newDF.append(df["Получатель ИП ООО"].values[i])
+
+interact(f, x=newDF)
+
